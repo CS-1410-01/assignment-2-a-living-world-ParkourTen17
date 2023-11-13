@@ -1,17 +1,10 @@
 package file;
 
-public class Creature {
+public interface Creature {
 
-    double productivity = .2;
-    double resilience = .5;
+    public boolean reproduce();
 
-    public void reproduce() {
-        
-    }
-
-    public void die() {
-        
-    }
+    public boolean die();
 
     
 

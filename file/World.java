@@ -1,42 +1,26 @@
 package file;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Random;
-import java.util.Scanner;
-
-
+import java.util.ArrayList;
 public class World {
 
-    public World() {
-        
+    static ArrayList<Bug> Creatures = new ArrayList<>();
+    public static void main(String[] args) {
+        Creatures.add(new Bug());
+        System.out.println(Creatures.get(0).name + " was born.");
+
+        while(Creatures.size() > 0) {
+            for (int i = 0; i < Creatures.size(); i++) {
+                if(Creatures.get(i).reproduce()) {
+                    Creatures.add(new Bug());
+                    System.out.println(Creatures.get(i).name + " was born.");
+                }
+                if(Creatures.get(i).die()) {
+                    System.out.println(Creatures.get(i).name + " has died."); 
+                    Creatures.remove(Creatures.get(i)); 
+
+                }
+            }
+        }
     }
 
-    public String createCreature() {
-            Scanner in;
-            try {
-                Random random = new Random(System.currentTimeMillis());
-                in = new Scanner(new File("name.txt"));
-
-                String tempString = in.next();
-                String[] names = tempString.split(",");
-
-                for (int i = 0; i < names.length; i++) {
-                    names[i] = names[i].substring(1, names[i].length() - 1);
-                }
-
-                String creatureName = names[random.nextInt(names.length)];
-                return creatureName;
-                //I should move this to the Creature constructor
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                return null;
-            }
-
-
-    
-
 }
 
-}

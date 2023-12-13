@@ -5,11 +5,57 @@ import java.io.FileNotFoundException;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Creature {
+public class Creature{
 
     static Random rand = new Random(System.currentTimeMillis());
 
     private String name;
+    protected int[] location = new int[2];
+    protected int speed;
+    protected double deathRate;
+    protected String type;
+
+    public void move(int a) {
+        boolean x = rand.nextBoolean();
+        boolean y = rand.nextBoolean();
+
+            if (x == true) {
+                location[0] += a;
+                if (location[0] > 9) {
+                    location[0] -= a;
+                }
+            } else {
+                location[0] -= a;
+                if (location[0] < 0) {
+                    location[0] += a;
+                }   
+            }
+            if (y == true) {
+                location [1] += a;
+                if (location[1] > 9) {
+                    location[1] -= a;
+                }
+            } else {
+                location[1] -= a;
+                if (location[1] < 0) {
+                    location[1] += a;
+                }
+            }
+    }
+
+    public boolean die() {
+        if (deathRate > rand.nextDouble()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public void reproduce(int[] l) {
+        location[0] = l[0];
+        location[1] = l[1];
+    }
+
 
     public static String createName() {
                     Scanner in;
@@ -40,24 +86,18 @@ public class Creature {
         name = n;
     }
 
-    public boolean reproduce(double productivity) {
-        
-        if (productivity > rand.nextDouble()) {
-            return true;
-        } else {
-            return false;
-        }
+    public int getX() {
+        return location[0];
+    }
+    public int getY() {
+        return location[1];
     }
 
-    public boolean die(double frailty) {
-        if (frailty > rand.nextDouble()) {
-            return true;
-        } else {
-            return false;
-        }
+    public void setLocation(int[] in){
+        location = in;
     }
-
-    
-
+    public int[] getLocation() {
+        return location;
+    }
 
 }

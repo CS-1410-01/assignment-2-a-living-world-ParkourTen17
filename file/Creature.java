@@ -5,58 +5,65 @@ import java.io.FileNotFoundException;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Creature{
+public class Creature extends Entity{
 
     static Random rand = new Random(System.currentTimeMillis());
 
+    //attributes specific to a creature
     private String name;
-    protected int[] location = new int[2];
     protected int speed;
-    protected double deathRate;
     protected String type;
+    protected int age = 0;
 
-    public void move(int a) {
-        boolean x = rand.nextBoolean();
-        boolean y = rand.nextBoolean();
+    //move method for every creature, passing in that creature's speed
+    public void move(int speed) {
 
-            if (x == true) {
-                location[0] += a;
-                if (location[0] > 9) {
-                    location[0] -= a;
+        // the creature chooses to move a random distance up to their speed 
+        int distance = rand.nextInt(speed) + 1;
+
+        //choosing whether or not to move in the x direction
+        if (rand.nextBoolean()) {
+            //choosing whether to move positive x or negative x
+            if (rand.nextBoolean()) {
+                location[0] += distance;
+                //if it's moved too far, move back
+                if (location[0] > World.sizeX - 1) {
+                    location[0] -= distance;
                 }
             } else {
-                location[0] -= a;
+                location[0] -= distance;
+                //if it's moved too far, move back
                 if (location[0] < 0) {
-                    location[0] += a;
+                    location[0] += distance;
                 }   
             }
-            if (y == true) {
-                location [1] += a;
-                if (location[1] > 9) {
-                    location[1] -= a;
+        } 
+        //choosing whether or not to move in the y direction
+        if (rand.nextBoolean()) {
+            //choosing whether to move positive y or negative y
+            if (rand.nextBoolean()) {
+                location[1] += distance;
+                //if it's moved too far, move back
+                if (location[1] > World.sizeY - 1) {
+                    location[1] -= distance;
                 }
             } else {
-                location[1] -= a;
+                location[1] -= distance;
+                //if it's moved too far, move back
                 if (location[1] < 0) {
-                    location[1] += a;
-                }
+                    location[1] += distance;
+                }   
             }
+        } 
     }
 
-    public boolean die() {
-        if (deathRate > rand.nextDouble()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
+    //sets the location of the newly spawned creature equal to the creature that spawned it 
     public void reproduce(int[] l) {
         location[0] = l[0];
         location[1] = l[1];
     }
-
-
+    
+    //returns a name for a creature from a big list of creatures called "name.txt"
     public static String createName() {
                     Scanner in;
             try {
@@ -78,26 +85,14 @@ public class Creature{
             }
     }
 
+
+    //getters and setters
     public String getName() {
         return name;
     }
 
     public void setName(String n) {
         name = n;
-    }
-
-    public int getX() {
-        return location[0];
-    }
-    public int getY() {
-        return location[1];
-    }
-
-    public void setLocation(int[] in){
-        location = in;
-    }
-    public int[] getLocation() {
-        return location;
     }
 
 }

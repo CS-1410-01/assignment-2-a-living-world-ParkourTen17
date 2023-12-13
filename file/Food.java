@@ -2,41 +2,16 @@ package file;
 
 import java.util.Random;
 
-public class Food {
+public class Food extends Entity{
     
     static Random rand = new Random(System.currentTimeMillis());
 
-    private int[] location = new int[2];
-    
-    public int getX() {
-        return location[0];
-    }
-    public int getY() {
-        return location[1];
-    }
-
-    public void setLocation(int[] in){
-        location = in;
-    }
-
-    public int[] getLocation() {
-        return location;
-    }
-
-    private double deathRate;
-
-    public boolean die() {
-        if (deathRate > rand.nextDouble()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
+    //food constructor, pretty small chance of it decaying and disappearing
+    //also spawns randomly according to the size of the world
     public Food() {
         deathRate = .05;
-        location[0] = rand.nextInt(10);
-        location[1] = rand.nextInt(10);
+        location[0] = rand.nextInt(World.sizeX);
+        location[1] = rand.nextInt(World.sizeY);
     }
 
 }
